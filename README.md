@@ -2,23 +2,32 @@
 
 ## 🚀 Project Overview
 
-This project is a **production-grade data engineering pipeline** built using **PySpark on Databricks**, designed to simulate real-world agricultural satellite intelligence systems used in precision farming, crop monitoring, and agronomic analytics.
+This project is a **Production-style data engineering pipeline** built using **PySpark on Databricks**, designed to simulate real-world agricultural satellite intelligence systems used in precision farming, crop monitoring, and agronomic analytics.
+
+It processes messy agricultural field data (sensor readings + parcel metadata) and converts it into clean, structured datasets for analytics.
 
 It processes raw agricultural sensor data and parcel metadata, performs robust data cleaning, and generates analytics-ready datasets using a **Medallion Architecture (Bronze → Silver → Gold)**.
 
-In real production systems:
-- Sensor data is noisy and inconsistent
-- Missing values are frequent
-- Multiple date formats exist
-- Duplicate records are common
-- Sensor failures are unavoidable
-- Data arrives from multiple heterogeneous sources
+In real-world systems, agricultural data is:
+- Missing and incomplete
+- Noisy and inconsistent
+- Sensor-failure prone
+- Time-series dependent
 
-This pipeline demonstrates how to build a **fault-tolerant, scalable ETL system** to handle such real-world challenges.
+This pipeline demonstrates how to handle such data using scalable Spark-based architecture.
+
 
 ---
 
 ## 🏗️ Medallion Architecture (Bronze → Silver → Gold)
+
+Raw CSV Data  
+↓  
+Cleaning & Standardization (Silver Layer)  
+↓  
+Validated Structured Outputs  
+↓  
+Analytics Layer (Gold - optional)
 
 ### 🥉 BRONZE LAYER (Raw Data)
 
@@ -109,7 +118,38 @@ Business Logic:
 - Null/zero area_hectares
 - Inconsistent crop_type formatting
 
+### Cleaning Decisions
+
+- NDVI values clipped to [-1, 1]
+- Missing numeric values imputed or filled
+- sensor_status standardized to uppercase
+- Duplicate records removed using dropDuplicates
+- Date formats standardized using Spark functions
+- Missing metadata handled using imputation or retention
+
 ---
+## 🧹 Data Pipeline (PySpark ETL Process)
+
+### Steps
+
+1. Data Ingestion
+   - Load CSV files into Spark DataFrames
+   - Schema inference enabled
+
+2. Data Cleaning
+   - Standardize formats
+   - Normalize categorical fields
+   - Handle missing values
+
+3. Validation
+   - Remove NDVI outliers
+   - Filter invalid sensor_status records
+   - Remove duplicates
+
+4. Transformation
+   - Prepare structured datasets
+   - Align time-series data
+
 
 ## 🧹 SILVER LAYER PIPELINE
 
@@ -125,6 +165,17 @@ Steps:
 
 Output:
 result_cleaned_silver.csv
+
+---
+
+## 📊 NDVI Analysis (Crop Level)
+
+### Objective
+
+For each crop_type:
+- Mean NDVI 30 days before sowing_date
+- Mean NDVI 30 days after sowing_date
+- Only include sensor_status = "OK"
 
 ---
 
