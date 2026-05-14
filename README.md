@@ -77,7 +77,7 @@ Characteristics:
 Purpose: Clean, validate, and standardize raw data.
 
 Output:
-- result_cleaned_silver.csv
+- cleaned_parcel_timeseries.csv
 
 Transformations:
 - Missing value handling (imputation / defaults)
@@ -95,7 +95,7 @@ Transformations:
 Purpose: Generate business insights for decision-making.
 
 Output:
-- result_gold.csv
+- crop_ndvi_analysis.csv
 
 
 # 📊 Gold Layer Output
@@ -451,7 +451,7 @@ Steps:
 8. Write cleaned dataset
 
 Output:
-result_cleaned_silver.csv
+cleaned_parcel_timeseries.csv
 
 ---
 
@@ -481,7 +481,7 @@ Steps:
    - n_parcels
 
 Output:
-result_gold.csv
+crop_ndvi_analysis.csv
 
 ---
 
@@ -491,9 +491,9 @@ parcel_readings.csv + parcel_metadata.csv
         ↓  
 🥉 BRONZE LAYER  
         ↓  
-🥈 SILVER LAYER → result_cleaned_silver.csv  
+🥈 SILVER LAYER → cleaned_parcel_timeseries.csv
         ↓  
-🥇 GOLD LAYER → result_gold.csv  
+🥇 GOLD LAYER → crop_ndvi_analysis.csv 
 
 ---
 
