@@ -97,8 +97,16 @@ Purpose: Generate business insights for decision-making.
 Output:
 - result_gold.csv
 
-Schema:
+
+# 📊 Gold Layer Output
+
+The final analytical dataset (`crop_ndvi_analysis.csv`) contains crop-level NDVI insights calculated using cleaned and validated sensor data.
+
 | crop_type | mean_ndvi_before | mean_ndvi_after | n_parcels |
+|-----------|------------------|-----------------|------------|
+| sugarcane | 0.1774892857 | 0.3361034483 | 19 |
+| soybean   | 0.1706219512 | 0.3126413043 | 4 |
+| wheat     | 0.1761372549 | 0.3101333333 | 2 |
 
 Business Logic:
 - Compute NDVI average 30 days before sowing_date
