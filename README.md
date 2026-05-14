@@ -24,7 +24,7 @@ This pipeline demonstrates how to handle such data using scalable Spark-based ar
 ```text
 satellite-intelligence-pipeline/
 │
-├── notebooks/
+├── Project/
 │   └── satellite_intelligence_pipeline.ipynb
 │
 ├── volumes/
