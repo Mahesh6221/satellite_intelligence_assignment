@@ -104,6 +104,258 @@ Business Logic:
 
 ## 🧪 DATA QUALITY ISSUES
 
+# Possible Data Quality Issues
+
+## Issue 1: Null or Missing Values
+
+### Description
+Some columns may contain:
+- NULL values
+- Empty strings
+- Missing records
+
+### Examples
+- Missing `ndvi_value`
+- Missing `temperature_c`
+- Missing `sowing_date`
+
+### Why This Is a Problem
+Missing values can:
+- Break calculations
+- Cause incorrect averages
+- Create join failures
+- Produce invalid analytics
+
+### Recommended Action
+
+| Column Type | Action |
+|---|---|
+| Critical IDs (`parcel_id`) | Drop rows |
+| Numerical columns | Impute if missing count is small |
+| Important business columns | Flag or remove |
+
+### Justification
+Primary identifiers cannot be missing because joins and downstream analytics depend on them.
+
+---
+
+# Data Quality Audit Overview
+
+A professional data quality audit typically checks the following:
+
+| Check Type | Examples |
+|---|---|
+| Missing values | NULLs |
+| Duplicate rows | Repeated records |
+| Invalid ranges | NDVI outside `[-1,1]` |
+| Invalid categories | Unknown sensor status |
+| Bad dates | Future dates, invalid formats |
+| Join integrity | Missing parcel IDs across tables |
+| Inconsistent formatting | Uppercase/lowercase issues |
+| Outliers | Unrealistic temperature/rainfall |
+
+---
+
+## Issue 2: Duplicate Records
+
+### Description
+The same:
+- `parcel_id`
+- `date`
+
+may appear multiple times.
+
+### Why This Is a Problem
+Duplicates can lead to:
+- Double counting
+- Incorrect averages
+- Invalid trend analysis
+- Inflated reporting metrics
+
+### Business Rule
+Each parcel should have only one reading per date.
+
+### Recommended Action
+- Remove duplicate records using:
+  - `parcel_id`
+  - `date`
+- Keep only the first valid occurrence.
+
+### Justification
+Duplicate records distort agricultural analytics and reduce data reliability.
+
+---
+
+## Issue 3: Invalid Dates
+
+### Description
+Date columns may:
+- Fail parsing
+- Contain future dates
+- Use inconsistent formats
+
+### Why This Is a Problem
+Invalid dates can:
+- Break time-series analysis
+- Cause incorrect aggregations
+- Create inaccurate seasonal trends
+
+### Recommended Action
+- Standardize all date formats
+- Remove rows with invalid dates
+- Reject future dates if not business-valid
+
+### Justification
+Accurate date formatting is critical for temporal agricultural analysis.
+
+---
+
+## Issue 4: Invalid NDVI Values
+
+### Description
+NDVI values must remain within the scientifically valid range:
+
+- `-1 <= NDVI <= 1`
+
+### Why This Is a Problem
+Values outside this range indicate:
+- Faulty satellite readings
+- Corrupted sensor data
+- Data ingestion issues
+
+### Examples
+- `1.5`
+- `-2`
+
+### Recommended Action
+- Flag invalid records
+- Replace invalid values with NULL
+- Optionally remove affected rows
+
+### Justification
+NDVI is scientifically bounded between `-1` and `1`, making out-of-range values invalid for analysis.
+
+---
+
+## Issue 5: Invalid Temperature Values
+
+### Description
+Extreme temperature values may indicate faulty sensors.
+
+### Examples
+- `-100°C`
+- `200°C`
+
+### Recommended Valid Range
+- `-20°C to 60°C`
+
+### Why This Is a Problem
+Unrealistic temperatures can:
+- Distort crop health analysis
+- Affect anomaly detection
+- Produce unreliable dashboards
+
+### Recommended Action
+- Flag unrealistic values
+- Replace with NULL or remove records
+
+### Justification
+Agricultural temperature readings generally remain within practical environmental limits.
+
+---
+
+## Issue 6: Negative Rainfall Values
+
+### Description
+Rainfall values cannot be negative.
+
+### Why This Is a Problem
+Negative rainfall indicates:
+- Sensor malfunction
+- Incorrect data ingestion
+- Corrupted measurements
+
+### Recommended Action
+- Convert negative values to NULL
+- Optionally remove affected rows
+
+### Justification
+Rainfall measurements are physically non-negative.
+
+---
+
+## Issue 7: Invalid Sensor Status Values
+
+### Description
+Sensor status values may contain inconsistent categories such as:
+- `bad`
+- `BAD`
+- `faulty`
+- `null`
+- `unknown`
+
+### Why This Is a Problem
+Inconsistent categorical values can:
+- Break filtering logic
+- Produce incorrect aggregations
+- Reduce reporting consistency
+
+### Recommended Action
+- Standardize values using:
+  - lowercase conversion
+  - whitespace trimming
+- Allow only approved categories:
+  - `good`
+  - `bad`
+
+### Justification
+Consistent categorical formatting improves data reliability and analytics quality.
+
+---
+
+## Issue 8: Metadata Join Mismatch
+
+### Description
+Some `parcel_id` values may exist:
+- In readings data but not metadata
+- In metadata but not readings
+
+### Why This Is a Problem
+Join mismatches can:
+- Create incomplete records
+- Cause reporting inconsistencies
+- Produce missing analytical context
+
+### Recommended Action
+- Identify unmatched records
+- Flag missing parcel references
+- Investigate source system inconsistencies
+
+### Justification
+Join integrity is essential for accurate parcel-level agricultural analytics.
+
+---
+
+## Issue 9: Invalid Area Hectares
+
+### Description
+Parcel area values cannot be:
+- Zero
+- Negative
+
+### Why This Is a Problem
+Invalid land area values affect:
+- Yield calculations
+- Productivity metrics
+- Farm-level analytics
+
+### Recommended Action
+- Remove invalid rows
+- Enforce positive area constraints
+
+### Justification
+Agricultural land area must always be greater than zero for meaningful analysis.
+
 ### parcel_readings.csv
 - Mixed date formats (16/05/2026, 1/27/2026, 20-Jan-26)
 - NDVI out of range (-1 to 1)
