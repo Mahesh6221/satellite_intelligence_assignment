@@ -19,6 +19,33 @@ This pipeline demonstrates how to handle such data using scalable Spark-based ar
 
 ---
 
+# 📁 Project Structure
+
+```text
+satellite-intelligence-pipeline/
+│
+├── notebooks/
+│   └── satellite_intelligence_pipeline.ipynb
+│
+├── volumes/
+│   └── satellite_intelligence/
+│       └── default/
+│           ├── bronze/
+│           │   ├── parcel_readings.csv
+│           │   └── parcel_metadata.csv
+│           │
+│           ├── silver/
+│           │   └── cleaned_parcel_timeseries.csv
+│           │
+│           └── gold/
+│               └── crop_ndvi_analysis.csv
+│
+├── README.md
+```
+
+
+
+
 ## 🏗️ Medallion Architecture (Bronze → Silver → Gold)
 
 Raw CSV Data  
