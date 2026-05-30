@@ -529,20 +529,6 @@ Impact:
 
 ---
 
-## 🤖 AI ASSISTANCE
-
-This project was built with AI assistance (ChatGPT).
-
-Used for:
-- Architecture design (Medallion model)
-- PySpark pipeline structuring
-- Data cleaning strategy
-- Documentation writing
-
-All final code decisions were manually validated.
-
----
-
 ## ▶️ HOW TO RUN
 
 git clone https://github.com/Mahesh6221/satellite_intelligence_assignment  
@@ -560,16 +546,6 @@ spark-submit data_pipeline.py
 - Gold layer focuses on business insights
 - Data quality is more important than complexity
 - Silent failures are the biggest production risk
-
----
-
-## 🎥 LOOM VIDEO
-
-https://www.loom.com/share/855c287b93cf486291088466ea6efb0d
-https://www.loom.com/share/732a442b855a457bbedd55160ca0346a
-https://www.loom.com/share/2bf910209f344b7f9157648783221a19
-https://www.loom.com/share/7155c194ab614fd19e9902b34986280d
-https://www.loom.com/share/029938f8a7c04936b5fa20b46d931f2b
 
 ---
 
