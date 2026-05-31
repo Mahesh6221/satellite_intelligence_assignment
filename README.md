@@ -547,10 +547,3 @@ spark-submit data_pipeline.py
 - Data quality is more important than complexity
 - Silent failures are the biggest production risk
 
----
-
-## 👤 AUTHOR
-
-Mahesh Patil  
-Data Engineer | Python | PySpark | Databricks  
-GitHub: https://github.com/Mahesh6221
